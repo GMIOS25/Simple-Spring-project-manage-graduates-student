@@ -1,4 +1,18 @@
 package org.website.entity;
 
-public class CongViecId {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.util.Date;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+public class CongViecId implements Serializable {
+    private String soCMND;
+    private Date ngayVaoCongTy;
 }
