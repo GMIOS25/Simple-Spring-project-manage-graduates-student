@@ -51,17 +51,12 @@
             <version>6.0.0</version>
             <scope>provided</scope>
         </dependency>
-        <!-- Jakarta JSTL API -->
+
+<!-- THÊM MỚI: Thư viện Thymeleaf cho Spring 6 -->
         <dependency>
-            <groupId>jakarta.servlet.jsp.jstl</groupId>
-            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-        <!-- Jakarta JSTL Implementation -->
-        <dependency>
-            <groupId>org.glassfish.web</groupId>
-            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
-            <version>3.0.1</version>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-spring6</artifactId>
+            <version>3.1.2.RELEASE</version>
         </dependency>
 
         <!-- Lombok -->

@@ -17,7 +17,6 @@ import java.util.Date;
 @Controller
 @RequestMapping("/sinhvien")
 public class SinhVienController {
-
     @Autowired
     private TruongRepository truongRepository;
 
@@ -34,7 +33,8 @@ public class SinhVienController {
         if (!model.containsAttribute("sinhVienDto")) {
             model.addAttribute("sinhVienDto", new SinhVienTotNghiepDTO());
         }
-        return "form";
+        model.addAttribute("content", "form :: form-content");
+        return "/layout/main";
     }
 
     @PostMapping("/save")
@@ -66,7 +66,8 @@ public class SinhVienController {
             model.addAttribute("truongList", truongRepository.findAll());
             model.addAttribute("nganhList", nganhRepository.findAll());
             model.addAttribute("sinhVienDto", dto);
-            return "form";
+            model.addAttribute("content", "form :: form-content");
+            return "/layout/main";
         }
 
         try {
@@ -78,7 +79,8 @@ public class SinhVienController {
             model.addAttribute("truongList", truongRepository.findAll());
             model.addAttribute("nganhList", nganhRepository.findAll());
             model.addAttribute("sinhVienDto", dto);
-            return "form";
+            model.addAttribute("content", "form :: form-content");
+            return "/layout/main";
         }
     }
 }
