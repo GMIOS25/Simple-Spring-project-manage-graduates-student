@@ -6,13 +6,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.website.dto.SinhVienTotNghiepDTO;
+import org.website.dto.SinhVienJobDTO;
+import org.website.entity.SinhVien;
 import org.website.repository.NganhRepository;
 import org.website.repository.TruongRepository;
 import org.website.service.SinhVienService;
 
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/sinhvien")
@@ -33,8 +37,8 @@ public class SinhVienController {
         if (!model.containsAttribute("sinhVienDto")) {
             model.addAttribute("sinhVienDto", new SinhVienTotNghiepDTO());
         }
-        model.addAttribute("content", "form :: form-content");
-        return "/layout/main";
+        model.addAttribute("contentPage", "/WEB-INF/views/sinhvien/form.jsp");
+        return "common/layout";
     }
 
     @PostMapping("/save")
@@ -66,8 +70,8 @@ public class SinhVienController {
             model.addAttribute("truongList", truongRepository.findAll());
             model.addAttribute("nganhList", nganhRepository.findAll());
             model.addAttribute("sinhVienDto", dto);
-            model.addAttribute("content", "form :: form-content");
-            return "/layout/main";
+            model.addAttribute("contentPage", "/WEB-INF/views/sinhvien/form.jsp");
+            return "common/layout";
         }
 
         try {
@@ -79,8 +83,42 @@ public class SinhVienController {
             model.addAttribute("truongList", truongRepository.findAll());
             model.addAttribute("nganhList", nganhRepository.findAll());
             model.addAttribute("sinhVienDto", dto);
-            model.addAttribute("content", "form :: form-content");
-            return "/layout/main";
+            model.addAttribute("contentPage", "/WEB-INF/views/sinhvien/form.jsp");
+            return "common/layout";
         }
+    }
+
+    @GetMapping("/search/basic")
+    public String searchBasic(
+            @RequestParam(value = "soCMND", required = false, defaultValue = "") String soCMND,
+            @RequestParam(value = "hoTen", required = false, defaultValue = "") String hoTen,
+            @RequestParam(value = "email", required = false, defaultValue = "") String email,
+            Model model) {
+        List<SinhVien> list = sinhVienService.searchBasic(soCMND, hoTen, email);
+        model.addAttribute("results", list);
+        model.addAttribute("soCMND", soCMND);
+        model.addAttribute("hoTen", hoTen);
+        model.addAttribute("email", email);
+        model.addAttribute("contentPage", "/WEB-INF/views/sinhvien/search_basic.jsp");
+        return "common/layout";
+    }
+
+    @GetMapping("/search/details")
+    public String searchDetails(
+            @RequestParam(value = "soCMND", required = false, defaultValue = "") String soCMND,
+            @RequestParam(value = "hoTen", required = false, defaultValue = "") String hoTen,
+            @RequestParam(value = "maTruong", required = false, defaultValue = "") String maTruong,
+            @RequestParam(value = "maNganh", required = false, defaultValue = "") String maNganh,
+            Model model) {
+        List<SinhVienJobDTO> list = sinhVienService.searchGraduationAndJob(soCMND, hoTen, maTruong, maNganh);
+        model.addAttribute("results", list);
+        model.addAttribute("soCMND", soCMND);
+        model.addAttribute("hoTen", hoTen);
+        model.addAttribute("maTruong", maTruong);
+        model.addAttribute("maNganh", maNganh);
+        model.addAttribute("truongList", truongRepository.findAll());
+        model.addAttribute("nganhList", nganhRepository.findAll());
+        model.addAttribute("contentPage", "/WEB-INF/views/sinhvien/search_details.jsp");
+        return "common/layout";
     }
 }
